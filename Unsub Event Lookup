@@ -1,0 +1,34 @@
+Here's an example of how you can retrieve the history of unsubscribes and the associated email details using Server-Side JavaScript (SSJS) in Salesforce Marketing Cloud:
+
+```javascript
+<script runat="server">
+  Platform.Load("Core", "1.1.1");
+
+  var unsubEventRows = Platform.Function.LookupRows('UnsubEvent', 'IsMasterUnsub', 'true');
+  var unsubEventCount = unsubEventRows.length;
+
+  if (unsubEventCount > 0) {
+    for (var i = 0; i < unsubEventCount; i++) {
+      var unsubEventRow = unsubEventRows[i];
+      var emailID = unsubEventRow.EmailID;
+      var jobID = unsubEventRow.JobID;
+      var listID = unsubEventRow.ListID;
+      var batchID = unsubEventRow.BatchID;
+      var unsubDate = unsubEventRow.EventDate;
+
+      // Do something with the retrieved data
+      // For example, you can log it or store it in a Data Extension
+      Write("Email ID: " + emailID + "<br>");
+      Write("Job ID: " + jobID + "<br>");
+      Write("List ID: " + listID + "<br>");
+      Write("Batch ID: " + batchID + "<br>");
+      Write("Unsubscribe Date: " + unsubDate + "<br>");
+      Write("<br>");
+    }
+  } else {
+    Write("No unsubscribe events found.");
+  }
+</script>
+```
+
+This code uses the `LookupRows` function to retrieve rows from the "UnsubEvent" data view where the "IsMasterUnsub" field is set to "true". It then iterates over the retrieved rows and extracts the relevant information such as Email ID, Job ID, List ID, Batch ID, and Unsubscribe Date. You can modify the code to suit your specific requirements, such as storing the data in a Data Extension or performing additional actions.
